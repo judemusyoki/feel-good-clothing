@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "acorn-jsx": "^5.3.1",
     "acorn-jsx-walk": "^2.0.0",
+    "firebase": "^7.23.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.1.2",
     "prettier-eslint": "^11.0.0",

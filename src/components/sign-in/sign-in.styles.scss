@@ -1,0 +1,14 @@
+.sign-in {
+  width: 380px;  // 30vw is 30% of the total
+  display: flex;
+  flex-direction: column; // All items to sit vertically
+
+  .title {
+    margin: 10px 0px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
