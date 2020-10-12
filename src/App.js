@@ -1,14 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
+import ShopPage from './pages/shop/shop.component';
 
 import Homepage from "./pages/homepage/homepage.component";
-
-const HatsPage = () => (
-  <div>
-    <h1>HATS PAGE</h1>
-  </div>
-);
 
 function App() {
   return (
@@ -16,7 +11,7 @@ function App() {
       {/* <Homepage /> */}
       <Switch>  {/* Renders the first correct matched path*/}
         <Route exact path='/' component={Homepage} /> {/* Exact renders only the homepage */}
-        <Route exact path='/hats' component={HatsPage} />
+        <Route exact path='/shop' component={ShopPage} />
       </Switch>
     </div>
   );
