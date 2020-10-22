@@ -13,6 +13,38 @@ const config = {
   measurementId: "G-C35JYBCWWF"
 };
 
+// Take user object and store it in our own database
+// It's async because it's an api call
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return;  // Check if the user has logged in, meaning the object exists or not
+
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+  const snapShot = await userRef.get();
+
+
+  // Is there a snapshot? user in our datbase?
+  // if not create a new user using the object from user auth
+  if(!snapShot.exists) {  
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    // Asynchronous call to save to database
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      })
+    } catch (error) {
+      console.log('error creating user', error.message);
+    }
+  }
+  return userRef; // We might stillneed the user ref for other things
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
