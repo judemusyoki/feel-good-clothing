@@ -1,11 +1,13 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+
 import Homepage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import Header from "./components/header/header.component";
+
 import { setCurrentUser } from "./redux/user/user.actions";
 import "./App.css";
 
@@ -47,12 +49,23 @@ class App extends React.Component {
           <Route exact path='/' component={Homepage} />
           {/* Exact renders only the homepage */}
           <Route exact path='/shop' component={ShopPage} />
-          <Route exact path='/signin' component={SignInAndSignUp} />
+          <Route
+            exact
+            path='/signin'
+            render={() =>
+              this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
+
+// Get the current user from redux state
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
 
 // App doesn't need current user, it only sets it, doesn't do anything here
 // Object passed here to an action object that is going to passed to every reducer
@@ -61,4 +74,4 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
