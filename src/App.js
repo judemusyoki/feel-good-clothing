@@ -1,15 +1,15 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
-import Homepage from "./pages/homepage/homepage.component";
-import ShopPage from "./pages/shop/shop.component";
-import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import Header from "./components/header/header.component";
+import Homepage from './pages/homepage/homepage.component';
+import ShopPage from './pages/shop/shop.component';
+import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import Header from './components/header/header.component';
 
-import { setCurrentUser } from "./redux/user/user.actions";
-import "./App.css";
+import { setCurrentUser } from './redux/user/user.actions';
+import './App.css';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -26,7 +26,7 @@ class App extends React.Component {
           // .data gives us a snapshot of our document's properties as an object
           setCurrentUser({
             id: snapShot.id,
-            ...snapShot.data(),
+            ...snapShot.data()
           });
         });
       } else {
@@ -46,14 +46,14 @@ class App extends React.Component {
         <Header />
         <Switch>
           {/* Renders the first correct matched path*/}
-          <Route exact path='/' component={Homepage} />
+          <Route exact path="/" component={Homepage} />
           {/* Exact renders only the homepage */}
-          <Route exact path='/shop' component={ShopPage} />
+          <Route exact path="/shop" component={ShopPage} />
           <Route
             exact
-            path='/signin'
+            path="/signin"
             render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
+              this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
             }
           />
         </Switch>
@@ -64,14 +64,14 @@ class App extends React.Component {
 
 // Get the current user from redux state
 const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+  currentUser: user.currentUser
 });
 
 // App doesn't need current user, it only sets it, doesn't do anything here
 // Object passed here to an action object that is going to passed to every reducer
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  setCurrentUser: (user) => dispatch(setCurrentUser(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
