@@ -7,8 +7,13 @@ const selectCart = (state) => state.cart;
 
 export const selectCartItems = createSelector(
   [selectCart], // Array of input selectors
-  (cart, user) => cart.cartItems // Function that returns the value that I want from this selector in the order they were written above
+  (cart) => cart.cartItems // Function that returns the value that I want from this selector in the order they were written above
   // It is automatically memoized
+);
+
+export const selectCartHidden = createSelector(
+  [selectCart],
+  (cart) => cart.hidden
 );
 
 export const selectCartItemsCount = createSelector(
@@ -19,4 +24,11 @@ export const selectCartItemsCount = createSelector(
         accumulatedQuantity + cartItem.quantity,
       0
     )
+);
+
+export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
+  cartItems.reduce(
+    (accumulatedTotal, cartItem) => accumulatedTotal + cartItem.quantity * cartItem.price,
+    0
+  )
 );
