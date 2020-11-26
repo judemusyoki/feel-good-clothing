@@ -1,28 +1,15 @@
 import React from 'react';
-import SHOP_DATA from './shop.data.js'
-import CollectionPreview from '../../components/collection-preview/collection-preview.component';
+import { Route } from 'react-router-dom';
 
-class ShopPage extends React.Component {
-  constructor(props) {
-    super(props);
+import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
+import CollectionPage from '../collection/collection.component';
 
-    this.state = {
-      collections: SHOP_DATA
-    }
-  }
-
-  render() {
-    const {collections} = this.state;
-    return (<div className='shop-page'>
-      {
-        collections.map(({ id, ...otherCollectionProps }) => (
-          <CollectionPreview key={id} {...otherCollectionProps} /> /* all the other data points are spread in */
-        ))
-      }
-
-    </div>)
-  }
-
-}
+const ShopPage = ({ match }) => (
+  <div className="shop-page">
+    <Route exact path={`${match.path}`} component={CollectionsOverview} />
+    {/* Here we now make a dynamic route based on the URL */}
+    <Route path={`${match.path}/:collectionId`} component={CollectionPage} />  {/* collectionId is a parameter */}
+  </div>
+);
 
 export default ShopPage;

@@ -1,5 +1,5 @@
 .collection-item {
-  width: 22%;
+  width: 22vw;  // vw is in relation to the width of the viewport or window not div
   display: flex;
   flex-direction: column;
   height: 350px;
