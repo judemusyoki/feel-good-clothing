@@ -8,7 +8,11 @@ import rootReducer from '../root-reducer';
 
 // Set up middleware btn actions and reducer
 
-const middlewares = [logger];
+const middlewares = [];
+
+if (process.env.NODE_ENV === 'development') {   // If the node env is dev then run middleware loggers
+  middlewares.push(logger);
+}
 
 // Actual store
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
