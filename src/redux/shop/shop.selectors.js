@@ -19,14 +19,15 @@ export const selectCollections = createSelector(
 
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
-  (collections) => Object.keys(collections).map(key => collections[key]) 
+  (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
   // Get all the keys and map the array of keys so we get the value of our collections object at that
 );
 
 export const selectCollection = memoize((collectionUrlParam) =>
   createSelector(
     [selectCollections],
-    (collections) => collections[collectionUrlParam]
+    (collections) => (collections ? collections[collectionUrlParam] : null)
     // collections.find(  // No more collections find because it's no longer an array
     //   (collection) => collection.id === COLLECTION_ID_MAP[collectionUrlParam]
     // )

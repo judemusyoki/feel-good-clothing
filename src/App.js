@@ -5,6 +5,7 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
+import { setCurrentUser } from './redux/user/user.actions';
 
 import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
@@ -12,7 +13,6 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 
-import { setCurrentUser } from './redux/user/user.actions';
 import './App.css';
 
 class App extends React.Component {
@@ -21,6 +21,9 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
+    // Using the observer pattern the auth event stream is passed the onAuth ... async.. function as the next function
+    // we could also pass an error function
+    // we set unsubscribe because the stream is always exists, so we need to stop listneing when the component unmounts
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -35,6 +38,7 @@ class App extends React.Component {
         });
       } else {
         setCurrentUser(userAuth);
+        console.log(userAuth);
       }
     });
   }
@@ -69,7 +73,7 @@ class App extends React.Component {
 
 // Get the current user from redux state
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+  currentUser: selectCurrentUser
 });
 
 // App doesn't need current user, it only sets it, doesn't do anything here
