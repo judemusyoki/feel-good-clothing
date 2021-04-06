@@ -34,6 +34,16 @@ export const selectCollection = memoize((collectionUrlParam) =>
   )
 );
 
+export const selectIsCollectionFetching = createSelector(
+  [selectShop],
+  (shop) => shop.isFetching
+);
+
+export const selectIsCollectionsLoaded = createSelector(
+  [selectShop],
+  (shop) => !!shop.collections // Converted to boolean is collections have been fetched
+);
+
 const testObject = { a: 1, b: 2, c: 3 };
 
 Object.keys(testObject);
