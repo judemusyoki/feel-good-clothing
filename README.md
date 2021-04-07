@@ -12,11 +12,8 @@ This is a work in progress ecommerce app that is being created to showcase maste
 - Firebase
 - Stripe API
 - Styled-Components
-- GraphQL
+
+Coming soon:
+- GraphQL 
 - Apollo
-- React Performance
-- React Design Patterns
-- Testing with Jest, Enzyme and Snapshot testing
-- React Best Practices
-- Persistance + Session Storage
-- State Normalization
+- Updating Stripe
