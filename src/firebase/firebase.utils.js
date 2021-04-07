@@ -77,7 +77,7 @@ export const convertCollectionsSnapshotToMap = (collections) => {
       items
     };
   });
-  // Pass in initial object
+  // Pass in the initial object
   // Sets first value to title in lowercase e.g. hats
   // THen next one
   // Sets second property to jackets collection
