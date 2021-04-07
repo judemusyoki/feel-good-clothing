@@ -13,6 +13,8 @@ const config = {
   measurementId: 'G-C35JYBCWWF'
 };
 
+firebase.initializeApp(config);
+
 // Take user object and store it in our own database
 // It's async because it's an api call
 
@@ -86,7 +88,14 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   }, {});
 };
 
-firebase.initializeApp(config);
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
+import { selectCurrentUser } from './redux/user/user.selectors';
+import { checkUserSession } from './redux/user/user.actions';
+
 import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
@@ -16,23 +19,8 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    // Using the observer pattern the auth event stream is passed the onAuth ... async.. function as the next function
-    // we could also pass an error function
-    // we set unsubscribe because the stream is always exists, so we need to stop listneing when the component unmounts
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //     userRef.onSnapshot((snapShot) => {
-    //       // Snapshot alone gives us id but no properties
-    //       // .data gives us a snapshot of our document's properties as an object
-    //       setCurrentUser({
-    //         id: snapShot.id,
-    //         ...snapShot.data()
-    //       });
-    //     });
-    //   }
-    //   setCurrentUser(userAuth);
-    // });
+    const { checkUserSession } = this.props;
+    checkUserSession();
   }
 
   componentWillUnmount() {
@@ -63,4 +51,12 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
